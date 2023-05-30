@@ -7,16 +7,16 @@
   <section name="data">
     <explorer view="C:\ProgramData\PureBasic\Examples\3D\" pattern="0"/>
     <log show="1"/>
-    <lastopen date="2023-05-29 11:13" user="gfoisy" host="DESKTOP-48T4C3I"/>
+    <lastopen date="2023-05-30 07:10" user="gfoisy" host="DESKTOP-48T4C3I"/>
   </section>
   <section name="files">
     <file name="main.pb">
       <config load="0" scan="1" panel="1" warn="1" lastopen="1" sortindex="1" panelstate="+"/>
-      <fingerprint md5="c2e2ed7368235b19673de1d9f646489b"/>
+      <fingerprint md5="89de6a503f01455839f9dfc5bdfed512"/>
     </file>
     <file name="Mech-Logia.sqlite">
       <config load="0" scan="0" panel="1" warn="1" lastopen="0" sortindex="999" panelstate="+"/>
-      <fingerprint md5=""/>
+      <fingerprint md5="4ebfc5fb2993026c51bb853bc09858a6"/>
     </file>
   </section>
   <section name="targets">

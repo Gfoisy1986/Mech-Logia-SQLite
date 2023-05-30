@@ -1,7 +1,8 @@
 ﻿UseSQLiteDatabase()
 
 
-      Enumeration
+Enumeration
+      #PageWO
       #list
       #mysql = 0
       EndEnumeration
@@ -15,7 +16,9 @@
 
   Procedure GfoisyHandler()
     Debug "Evènement : Menu -Test-"
-    WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+  If OpenWindow(3, 225, 50, 800, 600, "Fenêtre Principale", 0)
+         WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+       EndIf
   EndProcedure
   
     Procedure GitHandler()
@@ -25,11 +28,22 @@
   
     Procedure DonateHandler()
     Debug "Evènement : Menu -Test-"
-    WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+    If OpenWindow(3, 225, 50, 800, 600, "Fenêtre Principale", 0)
+         WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+       EndIf
   EndProcedure
   
   Procedure QuitHandler()
     Debug "Evènement : Menu -Quitter-"
+    End
+  EndProcedure
+  
+   Procedure ReadFileTest()
+     Debug "Evènement : Menu -Quitter-"
+      OpenFile(1, "test.txt")
+      While Eof(1) = 0 
+        ReadString(1)
+      Wend
     End
   EndProcedure
   
@@ -39,42 +53,157 @@
     
   EndProcedure
   
+
+  
   Procedure aWOordertHandler()
-    ;//////////////////////
+    ;//////////////////////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     If OpenDatabase(0, "Mech-Logia.sqlite", "", "")
     Debug "Connecté à Mech-Logia.sqlite"
    
       DatabaseQuery (0, "SELECT * FROM Workorder")
-    For i = 0 To 65000
+   ; For i = 0 To 65000
       ;AddGadgetItem(#list, i, "Ancien élément "+Str(i))
-      SetGadgetItemData(#list, i, i)
-    Next i
-    Debug ("Ouverture du work order" + GetGadgetText(#list))
-    If OpenWindow(3, 205, 50, 595, 600, "Workorder 'IDE'", 0)
-     
-          
+     ; SetGadgetItemData(#list, i, i)
+    ;Next i
+    Debug ("Ouverture du work order " + GetGadgetText(#list))
+    If OpenWindow(3, 225, 50, 800, 600, "Fenêtre Principale", 0)
       
+     
+      
+      TextGadget(200, 0 , 0, 200, 20, "Bon de Travail #", #PB_Text_Border | #PB_Text_Center)
+      StringGadget(100, 0   , 20, 200, 30, "" + GetGadgetText(#list))
+      
+      TextGadget(201, 200 , 0, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      StringGadget(101, 200 , 20, 200, 30, "")
+      
+      TextGadget(202, 400 , 0, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      StringGadget(102, 400 , 20, 200, 30, "")
+      
+      TextGadget(203, 600 , 0, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      StringGadget(103, 600 , 20, 200, 30, "")
+      
+      TextGadget(204, 0 , 50, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      StringGadget(104, 0   , 70, 200, 30, "")
+      
+      TextGadget(205, 200 , 50, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      StringGadget(105, 200 , 70, 200, 30, "")
+      
+      TextGadget(206, 400 ,50, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      StringGadget(106, 400 , 70, 200, 30, "")
+      
+      TextGadget(207, 600 , 50, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      StringGadget(107, 600 , 70, 200, 30, "")
+      
+      TextGadget(208, 0 , 100, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      StringGadget(108, 0   , 120, 200, 30, "")
+      
+      TextGadget(209, 200 , 100, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      StringGadget(109, 200 , 120, 200, 30, "")
+      
+      TextGadget(210, 400 , 100, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      StringGadget(110, 400 , 120, 200, 30, "")
+      
+      TextGadget(211, 600 , 100, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      StringGadget(111, 600 , 120, 200, 30, "")
+      
+      TextGadget(212, 0 , 150, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      StringGadget(112, 0   , 170, 200, 30, "")
+      
+      TextGadget(213, 200 , 150, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      StringGadget(113, 200 , 170, 200, 30, "")
+      
+      TextGadget(214, 400 , 150, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      StringGadget(114, 400 , 170, 200, 30, "")
+      
+      TextGadget(215, 600, 150, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      StringGadget(115, 600 , 170, 200, 30, "")
+      
+      TextGadget(216, 0 , 200, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      StringGadget(116, 0   , 220, 200, 30, "")
+      
+      TextGadget(217, 200 , 200, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      StringGadget(117, 200 , 220, 200, 30, "")
+      
+      TextGadget(218, 400 , 200, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      StringGadget(118, 400 , 220, 200, 30, "")
+      
+      TextGadget(219, 600 , 200, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      StringGadget(119, 600 , 220, 200, 30, "")
+      
+      TextGadget(220, 0 , 250, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      StringGadget(120, 0   , 270, 200, 30, "")
+      
+      TextGadget(221, 200 , 250, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      StringGadget(121, 200 , 270, 200, 30, "")
+      
+      TextGadget(222, 400 , 250, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      StringGadget(122, 400 , 270, 200, 30, "")
+      
+      TextGadget(223, 600 , 250, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      StringGadget(123, 600 , 270, 200, 30, "")
+      
+      
+      ;///////////////////////////////////////////Wo job space///////////
+      If ScrollAreaGadget(#PageWO, 0, 300, 800, 300, 800, 2600, 450)  
+        
+      StringGadget(124, 0 , 0, 800, 100, "Travaux A")
+      StringGadget(125, 0 , 100, 800, 100, "Travaux B")
+      StringGadget(126, 0 , 200, 800, 100, "Travaux C")
+      StringGadget(127, 0 , 300, 800, 100, "Travaux D")
+      StringGadget(128, 0 , 400, 800, 100, "Travaux E")
+      StringGadget(129, 0 , 500, 800, 100, "Travaux F")
+      StringGadget(130, 0 , 600, 800, 100, "Travaux G")
+      StringGadget(131, 0 , 700, 800, 100, "Travaux H")
+      StringGadget(132, 0 , 800, 800, 100, "Travaux I")
+      StringGadget(133, 0 , 900, 800, 100, "Travaux J")
+      StringGadget(134, 0 , 1000, 800, 100, "Travaux K")
+      StringGadget(135, 0 , 1100, 800, 100, "Travaux L")
+      StringGadget(136, 0 , 1200, 800, 100, "Travaux M")
+      StringGadget(137, 0 , 1300, 800, 100, "Travaux N")
+      StringGadget(138, 0 , 1400, 800, 100, "Travaux O")
+      StringGadget(139, 0 , 1500, 800, 100, "Travaux P")
+      StringGadget(140, 0 , 1600, 800, 100, "Travaux Q")
+      StringGadget(141, 0 , 1700, 800, 100, "Travaux R")
+      StringGadget(142, 0 , 1800, 800, 100, "Travaux S")
+      StringGadget(143, 0 , 1900, 800, 100, "Travaux T")
+      StringGadget(144, 0 , 2000, 800, 100, "Travaux U")
+      StringGadget(145, 0 , 2100, 800, 100, "Travaux V")
+      StringGadget(146, 0 , 2200, 800, 100, "Travaux W")
+      StringGadget(147, 0 , 2300, 800, 100, "Travaux X")
+      StringGadget(148, 0 , 2400, 800, 100, "Travaux Y")
+      StringGadget(149, 0 , 2500, 800, 100, "Travaux Z")
+      
+ EndIf
+ 
   EndIf
   EndIf
    ; ///////////////////////
   EndProcedure
-  ;///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ;///////////////////////////////////////////////////////////////////////////////////////////////////////////////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
   
      Procedure GWOHandler()
        Debug "Evènement : Menu -Test-"
        
-       
+        If OpenDatabase(0, "Mech-Logia.sqlite", "", "")
+    Debug "Connecté à Mech-Logia.sqlite"
+   
+      
        
       ; ///////////
        
        
+       If OpenWindow(3, 225, 50, 800, 600, "Fenêtre Principale", 0)
+       EndIf
        
-   
+       If OpenWindow(5, 1035, 50, 220, 600, "Poinçons", 0)
+         EndIf
 
-
-
-   If OpenWindow(2, 0, 50, 200, 600, "# Workorder", 0)
-     ListViewGadget(#list, 0, 0, 200, 600) 
+       If OpenWindow(4, 0, 50, 220, 200, "Gestion", 0)
+       EndIf
+       
+       If OpenWindow(2, 0, 280, 220, 370, "Sélection", 0)
+         
+     ListViewGadget(#list, 0, 0, 220, 370) 
      
   If DatabaseQuery (0, "SELECT * FROM Workorder")
   
@@ -98,112 +227,93 @@ If Not success
   AddGadgetItem(#list, -1, "MySQL Error: " + DatabaseError())
  
 EndIf
+EndIf
 
 BindGadgetEvent(#list, @aWOordertHandler(), #PB_EventType_LeftClick)
 
-	
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-       
-   ;  ///////////  
-       
-   
-
-
-    
-   
-
- 
-   
   
-  
-
-     
-     
    
  ;BindMenuEvent(2, 4, @Quit2Handler())
     
   EndProcedure
   
-     Procedure HGWOHandler()
-    Debug "Evènement : Menu -Test-"
-    WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
-  EndProcedure
+    
   
      Procedure CGWOHandler()
     Debug "Evènement : Menu -Test-"
-    WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+   If OpenWindow(3, 225, 50, 800, 600, "Fenêtre Principale", 0)
+         WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+       EndIf
   EndProcedure
   
      Procedure CGMHandler()
     Debug "Evènement : Menu -Test-"
-    WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+   If OpenWindow(3, 225, 50, 800, 600, "Fenêtre Principale", 0)
+         WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+       EndIf
   EndProcedure
   
-     Procedure HGPHandler()
+     Procedure HBTHandler()
     Debug "Evènement : Menu -Test-"
-    WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+    If OpenWindow(3, 225, 50, 800, 600, "Fenêtre Principale", 0)
+         WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+       EndIf
   EndProcedure
   
      Procedure IGPHandler()
     Debug "Evènement : Menu -Test-"
-    WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+    If OpenWindow(3, 225, 50, 800, 600, "Fenêtre Principale", 0)
+         WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+       EndIf
   EndProcedure
   
      Procedure IGEHandler()
     Debug "Evènement : Menu -Test-"
-    WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+    If OpenWindow(3, 225, 50, 800, 600, "Fenêtre Principale", 0)
+         WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+       EndIf
   EndProcedure
   
      Procedure IGCHandler()
     Debug "Evènement : Menu -Test-"
-    WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+   If OpenWindow(3, 225, 50, 800, 600, "Fenêtre Principale", 0)
+         WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+       EndIf
   EndProcedure
   
      Procedure IGFHandler()
     Debug "Evènement : Menu -Test-"
-    WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+    If OpenWindow(3, 225, 50, 800, 600, "Fenêtre Principale", 0)
+         WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+       EndIf
   EndProcedure
   
      Procedure DGFHandler()
     Debug "Evènement : Menu -Test-"
-    WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+    If OpenWindow(3, 225, 50, 800, 600, "Fenêtre Principale", 0)
+         WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+       EndIf
   EndProcedure
   
      Procedure IGHandler()
     Debug "Evènement : Menu -Test-"
-    WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+    If OpenWindow(3, 225, 50, 800, 600, "Fenêtre Principale", 0)
+         WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+       EndIf
   EndProcedure
   
      Procedure EXFHandler()
     Debug "Evènement : Menu -Test-"
-    WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+    If OpenWindow(3, 225, 50, 800, 600, "Fenêtre Principale", 0)
+         WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+       EndIf
   EndProcedure
   
      Procedure WOHandler()
     Debug "Evènement : Menu -Test-"
-    WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+   If OpenWindow(3, 225, 50, 800, 600, "Fenêtre Principale", 0)
+         WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+       EndIf
   EndProcedure
   
      Procedure BOSMHandler()
@@ -213,12 +323,18 @@ BindGadgetEvent(#list, @aWOordertHandler(), #PB_EventType_LeftClick)
   
      Procedure BOCOMPTAHandler()
     Debug "Evènement : Menu -Test-"
-    WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+   
+        RunProgram("https://www.sage.com/fr-ca/")
+       
   EndProcedure
   ;//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
      Procedure BOCALCUHandler()
-    Debug "Evènement : Menu -Test-"
-    WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+       Debug "Evènement : Menu -Test-"
+       If OpenWindow(3, 225, 50, 800, 600, "Fenêtre Principale", 0)
+         WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+       EndIf
+       
+    
   EndProcedure
   
   ;//////////////////////////////////////////////////////
@@ -226,7 +342,9 @@ BindGadgetEvent(#list, @aWOordertHandler(), #PB_EventType_LeftClick)
   
      Procedure BOCONVHandler()
        Debug "Evènement : Menu -Test-"
-       
+       If OpenWindow(3, 225, 50, 800, 600, "Fenêtre Principale", 0)
+         WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+       EndIf
   
    
 
@@ -238,32 +356,44 @@ BindGadgetEvent(#list, @aWOordertHandler(), #PB_EventType_LeftClick)
   
      Procedure BOEDITHandler()
     Debug "Evènement : Menu -Test-"
-    WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+    If OpenWindow(3, 225, 50, 800, 600, "Fenêtre Principale", 0)
+         WebGadget (3, 0, 0, 800, 600, "https://www.libreoffice.org/")
+       EndIf
   EndProcedure
   
      Procedure BOGRIHandler()
     Debug "Evènement : Menu -Test-"
-    WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+   If OpenWindow(3, 225, 50, 800, 600, "Fenêtre Principale", 0)
+         WebGadget (3, 0, 0, 800, 600, "https://krita.org/")
+       EndIf
   EndProcedure
   
      Procedure BOTODOHandler()
     Debug "Evènement : Menu -Test-"
-    WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+    If OpenWindow(3, 225, 50, 800, 600, "Fenêtre Principale", 0)
+         WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+       EndIf
   EndProcedure
   
      Procedure BOCARNHandler()
     Debug "Evènement : Menu -Test-"
-    WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+    If OpenWindow(3, 225, 50, 800, 600, "Fenêtre Principale", 0)
+         WebGadget (3, 0, 0, 800, 600, "https://librecad.org/")
+       EndIf
   EndProcedure
   
      Procedure CONTACTHandler()
     Debug "Evènement : Menu -Test-"
-    WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+    If OpenWindow(3, 225, 50, 800, 600, "Fenêtre Principale", 0)
+         WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+       EndIf
   EndProcedure
   
    Procedure FAQHandler()
     Debug "Evènement : Menu -Test-"
-    WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+    If OpenWindow(3, 225, 50, 800, 600, "Fenêtre Principale", 0)
+         WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+       EndIf
   EndProcedure
   
    Procedure NIHandler()
@@ -273,23 +403,42 @@ BindGadgetEvent(#list, @aWOordertHandler(), #PB_EventType_LeftClick)
   
   Procedure CFHandler()
     Debug "Evènement : Menu -Test-"
-    RunProgram("https://www.fleetguard.com/s/?language=fr_CA#popup1-0")
+    
+         RunProgram("https://www.fleetguard.com/s/?language=fr_CA#popup1-0")
+      
   EndProcedure
   
   Procedure DLHandler()
     Debug "Evènement : Menu -Test-"
-    WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+    If OpenWindow(3, 225, 50, 800, 600, "Fenêtre Principale", 0)
+         WebGadget (3, 0, 0, 800, 600, "https://www.diesellaptops.com/")
+       EndIf
   EndProcedure
   
+   Procedure FreecadHandler()
+    Debug "Evènement : Menu -Test-"
+    If OpenWindow(3, 225, 50, 800, 600, "Fenêtre Principale", 0)
+         WebGadget (3, 0, 0, 800, 600, "https://freecad.org/")
+       EndIf
+     EndProcedure
+     
+  Procedure ChangeIcon(Image$)  
+hIco=LoadImage(0,Image$)  
+SetClassLong_(WindowID(0),#GCL_HICON,hIco)
+EndProcedure 
   ;///////////////////////////////////////////////////////////////
 
      
   #FenetrePrincipale = 0
   #FenetreFille = 1
-  If OpenWindow(#FenetrePrincipale, 0, 0, 800, 20, "Mech-Logia", #PB_Window_SystemMenu, 0)
+  If OpenWindow(#FenetrePrincipale, 0, 0, 1255, 20, "Mech-Logia", #PB_Window_TitleBar)
+    ChangeIcon("icon.ico")
+    
+    
+   
     
       CreateMenu(0, WindowID(0))  ; la création du menu commence ici....
-      MenuTitle("Menu *Externe*")
+      MenuTitle("  Menu  ")
       MenuItem(1, "GuillaumeFoisy.ca")
       MenuItem(2, "GFoisy1986 Github")
       MenuItem(3, "Donation $$")
@@ -301,15 +450,14 @@ BindGadgetEvent(#list, @aWOordertHandler(), #PB_EventType_LeftClick)
         
         ;//////////////////////////////////////////
         
-        MenuTitle("Administration")
+        MenuTitle("  Administration  ")
         
       MenuItem(5, "Bon de travail")
      
    
       MenuItem(6, "Historique Bon de Travail")
       MenuItem(7, "Calendrier Bon de travail")
-      MenuItem(8, "Calendrier Maintenance")
-      MenuItem(9, "Historique Poinçon")
+      MenuItem(9, "Calendrier Maintenance")
       MenuItem(10, "Information Employer")
       MenuItem(11, "Information Client")
       MenuItem(12, "Information Flotte")
@@ -319,34 +467,33 @@ BindGadgetEvent(#list, @aWOordertHandler(), #PB_EventType_LeftClick)
       MenuItem(23, "To Do List")
         
         
-        ;//////////////////////////////////////////
+        
          
-      MenuTitle("Mécanicien")
       
-      MenuItem(16, "Bon de Travail")
-      MenuItem(19, "Calculatrice")
-      MenuItem(20, "Convertion Unité")
-      MenuItem(23, "To Do List")
+      
+      
+     
         
          
         ;/////////////////////////////////////////
-        
-        
-      MenuTitle("Boite à Outils *Externe*")
+      MenuTitle("  Boîte à Outils  ")
       
+      
+      MenuItem(19, "Calculatrice")
+      MenuItem(20, "Convertion Unité")
+      MenuItem(23, "To Do List")
       MenuItem(18, "Google MAPS")
       MenuItem(17, "Sage *Comptabilité*")
-      
       MenuItem(21, "Libreoffice")
       MenuItem(22, "Krita *Dessins*")
-      
-      MenuItem(24, "libreCAD // FreeCAD  *2D/3D*")
+      MenuItem(24, "LibreCAD")
+      MenuItem(31, "FreeCAD")
       MenuItem(28, "Navigateur Internet")
       MenuItem(29, "Cummins Filtration")
       MenuItem(30, "Diesel Shop Essential Links")
         ;/////////////////////////////////////////
         
-      MenuTitle("Support Technique *Externe*")
+      MenuTitle("  Support Technique  ")
       
       MenuItem(3, "Donation $$")
       MenuItem(25, "Contact")
@@ -361,10 +508,10 @@ BindGadgetEvent(#list, @aWOordertHandler(), #PB_EventType_LeftClick)
         BindMenuEvent(0, 4, @QuitHandler())
          
         BindMenuEvent(0, 5, @GWOHandler())
-        BindMenuEvent(0, 6, @HGWOHandler())
+        
         BindMenuEvent(0, 7, @CGWOHandler())
-        BindMenuEvent(0, 8, @CGMHandler())
-        BindMenuEvent(0, 9, @HGPHandler())
+        BindMenuEvent(0, 9, @CGMHandler())
+        BindMenuEvent(0, 6, @HBTHandler())
         BindMenuEvent(0, 10, @IGPHandler())
         BindMenuEvent(0, 11, @IGEHandler())
         BindMenuEvent(0, 12, @IGCHandler())
@@ -372,20 +519,21 @@ BindGadgetEvent(#list, @aWOordertHandler(), #PB_EventType_LeftClick)
         BindMenuEvent(0, 14, @DGFHandler())
         BindMenuEvent(0, 15, @IGHandler())
         BindMenuEvent(0, 16, @EXFHandler())
-        BindMenuEvent(0, 17, @WOHandler())
+        
         BindMenuEvent(0, 18, @BOSMHandler())
-        BindMenuEvent(0, 19, @BOCOMPTAHandler())
-        BindMenuEvent(0, 20, @BOCALCUHandler())
-        BindMenuEvent(0, 21, @BOCONVHandler())
-        BindMenuEvent(0, 22, @BOEDITHandler())
-        BindMenuEvent(0, 23, @BOGRIHandler())
-        BindMenuEvent(0, 24, @BOTODOHandler())
-        BindMenuEvent(0, 25, @BOCARNHandler())
-        BindMenuEvent(0, 26, @CONTACTHandler())
-        BindMenuEvent(0, 27, @FAQHandler())
+        BindMenuEvent(0, 17, @BOCOMPTAHandler())
+        BindMenuEvent(0, 19, @BOCALCUHandler())
+        BindMenuEvent(0, 20, @BOCONVHandler())
+        BindMenuEvent(0, 21, @BOEDITHandler())
+        BindMenuEvent(0, 22, @BOGRIHandler())
+        BindMenuEvent(0, 23, @BOTODOHandler())
+        BindMenuEvent(0, 24, @BOCARNHandler())
+        BindMenuEvent(0, 25, @CONTACTHandler())
+        BindMenuEvent(0, 26, @FAQHandler())
         BindMenuEvent(0, 28, @NIHandler())
         BindMenuEvent(0, 29, @CFHandler())
         BindMenuEvent(0, 30, @DLHandler())
+        BindMenuEvent(0, 31, @freecadHandler())
         ;/////////////////////////////////////////
         
       
@@ -479,7 +627,7 @@ BindGadgetEvent(#list, @aWOordertHandler(), #PB_EventType_LeftClick)
 ;EndIf
 ;
 ; IDE Options = PureBasic 6.02 LTS (Windows - x64)
-; CursorPosition = 51
-; FirstLine = 37
+; CursorPosition = 433
+; FirstLine = 431
 ; Folding = ------
 ; EnableXP
