@@ -3,9 +3,13 @@
 
 Enumeration
       #PageWO
+      #listpunch
+      #listNote2
+      #listNote3
+      #listNote
       #list
       #mysql = 0
-      EndEnumeration
+EndEnumeration
 
 
   
@@ -65,118 +69,140 @@ Enumeration
       ;AddGadgetItem(#list, i, "Ancien élément "+Str(i))
      ; SetGadgetItemData(#list, i, i)
     ;Next i
-    Debug ("Ouverture du work order " + GetGadgetText(#list))
+      Debug ("Ouverture du work order " + GetGadgetText(#list))
+      
+      If OpenWindow(5, 1035, 50, 220, 600, "ARCHIVE de Notes", 0)
+         ListViewGadget(#listNote3, 0, 0, 220, 520)
+           If DatabaseQuery (0, "SELECT * FROM Workorder")
+             While NextDatabaseRow(#mySql) 
+               
+               AddGadgetItem(#listNote3, -1,"Note # " + GetDatabaseString(#mySql, 0))
+               AddGadgetItem(#listNote3, -1, "Name : " + GetDatabaseString(#mySql, 0))
+               AddGadgetItem(#listNote3, -1, "Date = " + GetDatabaseString(#mySql, 0))
+                   AddGadgetItem(#listNote3, -1, "")
+                   
+              Wend 
+              FinishDatabaseQuery(#mySql)
+   
+              success = #True
+            EndIf
+            ButtonGadget(300, 0, 520, 220, 20,"Download")
+            ButtonGadget(301, 0, 540, 220, 20,"Delete")
+            TextGadget(302, 0, 560, 220, 20,"Recherche", #PB_Text_Center | #PB_Text_Border)
+            StringGadget(303, 0, 580, 220, 20,"***Tapez Ici!***")
+         EndIf
+         
+         
     If OpenWindow(3, 225, 50, 800, 600, "Fenêtre Principale", 0)
       
-     
+                                   
+       
       
       TextGadget(200, 0 , 0, 200, 20, "Bon de Travail #", #PB_Text_Border | #PB_Text_Center)
-      StringGadget(100, 0   , 20, 200, 30, "" + GetGadgetText(#list))
+      TextGadget(100, 0   , 20, 200, 30, "" + GetGadgetText(#list), #PB_Text_Border | #PB_Text_Center)
       
-      TextGadget(201, 200 , 0, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      
+      TextGadget(201, 200 , 0, 200, 20, "# Série (VIN)", #PB_Text_Border | #PB_Text_Center)
       StringGadget(101, 200 , 20, 200, 30, "")
       
-      TextGadget(202, 400 , 0, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      TextGadget(202, 400 , 0, 200, 20, "Year", #PB_Text_Border | #PB_Text_Center)
       StringGadget(102, 400 , 20, 200, 30, "")
       
-      TextGadget(203, 600 , 0, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      TextGadget(203, 600 , 0, 200, 20, "Make", #PB_Text_Border | #PB_Text_Center)
       StringGadget(103, 600 , 20, 200, 30, "")
       
-      TextGadget(204, 0 , 50, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      TextGadget(204, 0 , 50, 200, 20, "# Unité", #PB_Text_Border | #PB_Text_Center)
       StringGadget(104, 0   , 70, 200, 30, "")
       
-      TextGadget(205, 200 , 50, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      TextGadget(205, 200 , 50, 200, 20, "Kilométrages", #PB_Text_Border | #PB_Text_Center)
       StringGadget(105, 200 , 70, 200, 30, "")
       
-      TextGadget(206, 400 ,50, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      TextGadget(206, 400 ,50, 200, 20, "Heures", #PB_Text_Border | #PB_Text_Center)
       StringGadget(106, 400 , 70, 200, 30, "")
       
-      TextGadget(207, 600 , 50, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      TextGadget(207, 600 , 50, 200, 20, "Date", #PB_Text_Border | #PB_Text_Center)
       StringGadget(107, 600 , 70, 200, 30, "")
       
-      TextGadget(208, 0 , 100, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      TextGadget(208, 0 , 100, 200, 20, "Prochaine Maintenance", #PB_Text_Border | #PB_Text_Center)
       StringGadget(108, 0   , 120, 200, 30, "")
       
-      TextGadget(209, 200 , 100, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      TextGadget(209, 200 , 100, 200, 20, "Date Prochaine INSP. SAAQ // P.E.P", #PB_Text_Border | #PB_Text_Center)
       StringGadget(109, 200 , 120, 200, 30, "")
       
-      TextGadget(210, 400 , 100, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      TextGadget(210, 400 , 100, 200, 20, "Date Fin Garantie", #PB_Text_Border | #PB_Text_Center)
       StringGadget(110, 400 , 120, 200, 30, "")
       
-      TextGadget(211, 600 , 100, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      TextGadget(211, 600 , 100, 200, 20, "Imatriculation", #PB_Text_Border | #PB_Text_Center)
       StringGadget(111, 600 , 120, 200, 30, "")
       
-      TextGadget(212, 0 , 150, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      TextGadget(212, 0 , 150, 200, 20, "Nom Propriétaire", #PB_Text_Border | #PB_Text_Center)
       StringGadget(112, 0   , 170, 200, 30, "")
       
-      TextGadget(213, 200 , 150, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      TextGadget(213, 200 , 150, 200, 20, "Addresse Propriétaire", #PB_Text_Border | #PB_Text_Center)
       StringGadget(113, 200 , 170, 200, 30, "")
       
-      TextGadget(214, 400 , 150, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      TextGadget(214, 400 , 150, 200, 20, "Addresse du Vehicule (Home)", #PB_Text_Border | #PB_Text_Center)
       StringGadget(114, 400 , 170, 200, 30, "")
       
-      TextGadget(215, 600, 150, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
+      TextGadget(215, 600, 150, 200, 20, "Mot de passe 'ECM'", #PB_Text_Border | #PB_Text_Center)
       StringGadget(115, 600 , 170, 200, 30, "")
       
-      TextGadget(216, 0 , 200, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
-      StringGadget(116, 0   , 220, 200, 30, "")
+      TextGadget(218, 0, 200, 200, 20, "Liste de Notes", #PB_Text_Border | #PB_Text_Center)
       
-      TextGadget(217, 200 , 200, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
-      StringGadget(117, 200 , 220, 200, 30, "")
-      
-      TextGadget(218, 400 , 200, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
-      StringGadget(118, 400 , 220, 200, 30, "")
-      
-      TextGadget(219, 600 , 200, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
-      StringGadget(119, 600 , 220, 200, 30, "")
-      
-      TextGadget(220, 0 , 250, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
-      StringGadget(120, 0   , 270, 200, 30, "")
-      
-      TextGadget(221, 200 , 250, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
-      StringGadget(121, 200 , 270, 200, 30, "")
-      
-      TextGadget(222, 400 , 250, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
-      StringGadget(122, 400 , 270, 200, 30, "")
-      
-      TextGadget(223, 600 , 250, 200, 20, "", #PB_Text_Border | #PB_Text_Center)
-      StringGadget(123, 600 , 270, 200, 30, "")
-      
-      
-      ;///////////////////////////////////////////Wo job space///////////
-      If ScrollAreaGadget(#PageWO, 0, 300, 800, 300, 800, 2600, 450)  
+        ListViewGadget(#listNote2, 0, 220, 200, 300)
+           If DatabaseQuery (0, "SELECT * FROM Workorder")
+              While NextDatabaseRow(#mySql)       
+                   AddGadgetItem(#listNote2, -1, "Note # " + GetDatabaseString(#mySql, 0))
+                   AddGadgetItem(#listNote2, -1, "Name : " + GetDatabaseString(#mySql, 0))
+                   AddGadgetItem(#listNote2, -1, "Date = " + GetDatabaseString(#mySql, 0))
+                   AddGadgetItem(#listNote2, -1, "")
+              Wend 
+              FinishDatabaseQuery(#mySql)
+   
+              success = #True
+           EndIf
         
-      StringGadget(124, 0 , 0, 800, 100, "Travaux A")
-      StringGadget(125, 0 , 100, 800, 100, "Travaux B")
-      StringGadget(126, 0 , 200, 800, 100, "Travaux C")
-      StringGadget(127, 0 , 300, 800, 100, "Travaux D")
-      StringGadget(128, 0 , 400, 800, 100, "Travaux E")
-      StringGadget(129, 0 , 500, 800, 100, "Travaux F")
-      StringGadget(130, 0 , 600, 800, 100, "Travaux G")
-      StringGadget(131, 0 , 700, 800, 100, "Travaux H")
-      StringGadget(132, 0 , 800, 800, 100, "Travaux I")
-      StringGadget(133, 0 , 900, 800, 100, "Travaux J")
-      StringGadget(134, 0 , 1000, 800, 100, "Travaux K")
-      StringGadget(135, 0 , 1100, 800, 100, "Travaux L")
-      StringGadget(136, 0 , 1200, 800, 100, "Travaux M")
-      StringGadget(137, 0 , 1300, 800, 100, "Travaux N")
-      StringGadget(138, 0 , 1400, 800, 100, "Travaux O")
-      StringGadget(139, 0 , 1500, 800, 100, "Travaux P")
-      StringGadget(140, 0 , 1600, 800, 100, "Travaux Q")
-      StringGadget(141, 0 , 1700, 800, 100, "Travaux R")
-      StringGadget(142, 0 , 1800, 800, 100, "Travaux S")
-      StringGadget(143, 0 , 1900, 800, 100, "Travaux T")
-      StringGadget(144, 0 , 2000, 800, 100, "Travaux U")
-      StringGadget(145, 0 , 2100, 800, 100, "Travaux V")
-      StringGadget(146, 0 , 2200, 800, 100, "Travaux W")
-      StringGadget(147, 0 , 2300, 800, 100, "Travaux X")
-      StringGadget(148, 0 , 2400, 800, 100, "Travaux Y")
-      StringGadget(149, 0 , 2500, 800, 100, "Travaux Z")
+   
+      TextGadget(217, 200, 200, 600, 20, "Editeur de Note", #PB_Text_Border | #PB_Text_Center)
+      EditorGadget(117, 200, 220, 600, 300)
+      
+      ButtonGadget(219, 0, 520, 800, 80,"JOB A ~ Z")
+      ;///////////////////////////////////////////Wo job space///////////
+      ;TextGadget(216, 0, 280, 800, 20, "Liste des travaux", #PB_Text_Border | #PB_Text_Center)
+      
+     ; If ScrollAreaGadget(#PageWO, 0, 300, 800, 300, 800, 2600, 150) 
+        
+      ;StringGadget(124, 0 , 0, 800, 100, "Travaux A")
+      ;StringGadget(125, 0 , 100, 800, 100, "Travaux B")
+      ;StringGadget(126, 0 , 200, 800, 100, "Travaux C")
+      ;StringGadget(127, 0 , 300, 800, 100, "Travaux D")
+     ; StringGadget(128, 0 , 400, 800, 100, "Travaux E")
+     ; StringGadget(129, 0 , 500, 800, 100, "Travaux F")
+     ; StringGadget(130, 0 , 600, 800, 100, "Travaux G")
+     ; StringGadget(131, 0 , 700, 800, 100, "Travaux H")
+     ; StringGadget(132, 0 , 800, 800, 100, "Travaux I")
+     ; StringGadget(133, 0 , 900, 800, 100, "Travaux J")
+     ; StringGadget(134, 0 , 1000, 800, 100, "Travaux K")
+     ; StringGadget(135, 0 , 1100, 800, 100, "Travaux L")
+     ; StringGadget(136, 0 , 1200, 800, 100, "Travaux M")
+     ; StringGadget(137, 0 , 1300, 800, 100, "Travaux N")
+     ; StringGadget(138, 0 , 1400, 800, 100, "Travaux O")
+     ; StringGadget(139, 0 , 1500, 800, 100, "Travaux P")
+     ; StringGadget(140, 0 , 1600, 800, 100, "Travaux Q")
+     ; StringGadget(141, 0 , 1700, 800, 100, "Travaux R")
+     ; StringGadget(142, 0 , 1800, 800, 100, "Travaux S")
+     ; StringGadget(143, 0 , 1900, 800, 100, "Travaux T")
+     ; StringGadget(144, 0 , 2000, 800, 100, "Travaux U")
+      ;StringGadget(145, 0 , 2100, 800, 100, "Travaux V")
+      ;StringGadget(146, 0 , 2200, 800, 100, "Travaux W")
+     ; StringGadget(147, 0 , 2300, 800, 100, "Travaux X")
+     ; StringGadget(148, 0 , 2400, 800, 100, "Travaux Y")
+      ;StringGadget(149, 0 , 2500, 800, 100, "Travaux Z")
       
  EndIf
  
   EndIf
-  EndIf
+  ;EndIf
    ; ///////////////////////
   EndProcedure
   ;///////////////////////////////////////////////////////////////////////////////////////////////////////////////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -194,13 +220,28 @@ Enumeration
        
        If OpenWindow(3, 225, 50, 800, 600, "Fenêtre Principale", 0)
        EndIf
-       
-       If OpenWindow(5, 1035, 50, 220, 600, "Poinçons", 0)
-         EndIf
-
-       If OpenWindow(4, 0, 50, 220, 200, "Gestion", 0)
+      
+;///////////////////////////////////////////////////////////////////////>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+         If OpenWindow(4, 0, 50, 220, 200, "Gestion", 0)
+           
+           ListViewGadget(#listpunch, 0, 0, 220, 200)
+           If DatabaseQuery (0, "SELECT * FROM Workorder")
+              While NextDatabaseRow(#mySql)       
+                   AddGadgetItem(#listpunch, -1, "Punch " + GetDatabaseString(#mySql, 0))
+                   AddGadgetItem(#listpunch, -1, "")
+              Wend 
+              FinishDatabaseQuery(#mySql)
+   
+              success = #True
+           EndIf
+           
+           
+           
+           
+           
+           
        EndIf
-       
+       ;////////////////////////////////////////////////////////////////////////////////ùùùùù>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
        If OpenWindow(2, 0, 280, 220, 370, "Sélection", 0)
          
      ListViewGadget(#list, 0, 0, 220, 370) 
@@ -209,7 +250,7 @@ Enumeration
   
     While NextDatabaseRow(#mySql)       
       AddGadgetItem(#list, -1, "WO No: " + GetDatabaseString(#mySql, 0))
-      AddGadgetItem(#list, -1, "")
+      
     Wend 
    
     FinishDatabaseQuery(#mySql)
@@ -254,6 +295,16 @@ BindGadgetEvent(#list, @aWOordertHandler(), #PB_EventType_LeftClick)
   EndProcedure
   
      Procedure HBTHandler()
+    Debug "Evènement : Menu -Test-"
+    If OpenWindow(3, 225, 50, 800, 600, "Fenêtre Principale", 0)
+         WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
+       EndIf
+  EndProcedure
+  
+  
+ 
+  
+  Procedure CGHNHandler()
     Debug "Evènement : Menu -Test-"
     If OpenWindow(3, 225, 50, 800, 600, "Fenêtre Principale", 0)
          WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
@@ -456,14 +507,15 @@ EndProcedure
      
    
       MenuItem(6, "Historique Bon de Travail")
-      MenuItem(7, "Calendrier Bon de travail")
+      MenuItem(8, "Historique des Notes")
+      MenuItem(7, "Calendrier Bon de Travail")
       MenuItem(9, "Calendrier Maintenance")
       MenuItem(10, "Information Employer")
       MenuItem(11, "Information Client")
       MenuItem(12, "Information Flotte")
       MenuItem(13, "Dossier Facture")
       MenuItem(14, "Inventaire")
-      MenuItem(28, "Explorateur de fichier")
+      MenuItem(28, "Explorateur de Fichier")
       MenuItem(23, "To Do List")
         
         
@@ -508,7 +560,7 @@ EndProcedure
         BindMenuEvent(0, 4, @QuitHandler())
          
         BindMenuEvent(0, 5, @GWOHandler())
-        
+        BindMenuEvent(0, 8, @CGHNHandler())
         BindMenuEvent(0, 7, @CGWOHandler())
         BindMenuEvent(0, 9, @CGMHandler())
         BindMenuEvent(0, 6, @HBTHandler())
@@ -627,7 +679,7 @@ EndProcedure
 ;EndIf
 ;
 ; IDE Options = PureBasic 6.02 LTS (Windows - x64)
-; CursorPosition = 433
-; FirstLine = 431
+; CursorPosition = 90
+; FirstLine = 63
 ; Folding = ------
 ; EnableXP
