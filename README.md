@@ -6,7 +6,7 @@ Mech-Logia is a software for administrating a mecanic shop.
 
 A Purebasic Mech-Logia Application using SQLite as Database.
 
-APplication with embedded Database for using with a single computer for administration and work no account.
+Application with embedded Database for using with a single computer for administration no account.
 
 /* Donation is not active right now it on the planning! */
 
