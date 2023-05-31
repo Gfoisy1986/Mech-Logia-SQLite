@@ -1,4 +1,7 @@
 # Mech-Logia
+
+*** Currently in development ***
+
 Mech-Logia is a software for administrating a mecanic shop.
 
 A Purebasic Mech-Logia Application using SQLite as Database.
