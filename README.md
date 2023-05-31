@@ -8,8 +8,8 @@ A Purebasic Mech-Logia Application using SQLite as Database.
 
 Application with embedded Database for using with a single computer for administration no account.
 
-/* Donation is not active right now it on the planning! */
-
-/* A Version with external Database is on the planning please Donate if you use the app commercially thanks. */
+- To Run you have to create the executable with purebasic.
+- Purebasic is available on win, linux, osx, Rpi.
+- www.purebasic.com
 
 Guillaume Foisy
