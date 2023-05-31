@@ -72,7 +72,11 @@ EndEnumeration
       Debug ("Ouverture du work order " + GetGadgetText(#list))
       
       If OpenWindow(5, 1035, 50, 220, 600, "ARCHIVE de Notes", 0)
-         ListViewGadget(#listNote3, 0, 0, 220, 520)
+        
+        TextGadget(302, 0, 0, 220, 20,"Recherche", #PB_Text_Center | #PB_Text_Border)
+        StringGadget(303, 0, 20, 220, 20,"***Tapez Ici!***")
+            
+            ListViewGadget(#listNote3, 0, 40, 220, 520)
            If DatabaseQuery (0, "SELECT * FROM Workorder")
              While NextDatabaseRow(#mySql) 
                
@@ -86,10 +90,9 @@ EndEnumeration
    
               success = #True
             EndIf
-            ButtonGadget(300, 0, 520, 220, 20,"Download")
-            ButtonGadget(301, 0, 540, 220, 20,"Delete")
-            TextGadget(302, 0, 560, 220, 20,"Recherche", #PB_Text_Center | #PB_Text_Border)
-            StringGadget(303, 0, 580, 220, 20,"***Tapez Ici!***")
+            ButtonGadget(300, 0, 560, 220, 20,"Download")
+            ButtonGadget(301, 0, 580, 220, 20,"Delete")
+            
          EndIf
          
          
@@ -679,7 +682,7 @@ EndProcedure
 ;EndIf
 ;
 ; IDE Options = PureBasic 6.02 LTS (Windows - x64)
-; CursorPosition = 90
-; FirstLine = 63
+; CursorPosition = 92
+; FirstLine = 60
 ; Folding = ------
 ; EnableXP
