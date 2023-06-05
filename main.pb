@@ -1,6 +1,5 @@
 ﻿UseSQLiteDatabase()
 
-Icone$ = "icon.ico"
 
 Enumeration
       #PageWO
@@ -13,14 +12,43 @@ Enumeration
       #list
       #mysql = 0
       #close
+      #File
 EndEnumeration
-
 
   
    If OpenDatabase(0, "Mech-Logia.sqlite", "", "")
     Debug "Connecté à Mech-Logia.sqlite"
    EndIf
    
+   
+Icone$ = "icon.ico"
+
+   
+    Procedure savenotebuttonHandler()
+    Debug "editor window saved"
+     text1$ = GetGadgetText(#listNote3) + ".txt"
+    OpenFile(0, text1$)    ; Ouvre un fichier existant ou en crée un nouveau s'il n'existait pas
+    FileSeek(0, Lof(0))
+    WriteString(0, "" + GetGadgetText(117))
+    CloseFile(0)
+
+  
+  EndProcedure
+  
+   Procedure closewindowHandler()
+    Debug "Close window 1"
+    
+CloseWindow(1)
+  
+EndProcedure
+
+ Procedure closewindow2Handler()
+    Debug "Close window 2"
+    
+CloseWindow(2)
+  
+  EndProcedure
+  
    
      Procedure closewindowjobHandler()
     Debug "job window closed"
@@ -30,15 +58,19 @@ EndEnumeration
    
     Procedure openwindowjobHandler()
     Debug "editor gadget reload!"
-   OpenWindow(#job, 0, 0, 800, 600, "Job A ~ Z", #PB_Window_MinimizeGadget | #PB_Window_ScreenCentered)
+   OpenWindow(#job, 0, 0, 800, 600, "Job A ~ Z", #PB_Window_MinimizeGadget | #PB_Window_ScreenCentered | #PB_Window_BorderLess)
    r=GetMenuItemCount_(GetSystemMenu_(WindowID(#job),#False)) ; Get number of menu items.
 RemoveMenu_(GetSystemMenu_(WindowID(#job),0),r-1,#MF_BYPOSITION) ; Disable "X" button.
 RemoveMenu_(GetSystemMenu_(WindowID(#job),0),r-2,#MF_BYPOSITION) ; Remove separator.
 DrawMenuBar_(WindowID(#job)) ; Redraw the window's menu bar to reflect the changes.
+CreateMenu(2, WindowID(#job))  ; la création du menu commence ici....
+      MenuTitle("Menu")
+                       
+        MenuItem(200, "Fermer")
 
    ;///////////////////////////////////////////Wo job space///////////
       TextGadget(216, 0, 280, 800, 20, "Liste des travaux", #PB_Text_Border | #PB_Text_Center)
-      ButtonGadget(150, 670, 0, 130, 20, "Fermer la fenêtre")
+     
       If ScrollAreaGadget(#PageWO, 0, 300, 800, 300, 800, 2600, 150) 
         
       StringGadget(124, 0 , 0, 800, 100, "Travaux A")
@@ -72,8 +104,9 @@ DrawMenuBar_(WindowID(#job)) ; Redraw the window's menu bar to reflect the chang
      EndIf
     
     
-  BindGadgetEvent(150, @closewindowjobHandler())
-    
+ 
+    BindMenuEvent(2, 200, @closewindowjobHandler())
+  
   EndProcedure
    
      Procedure newnotebuttonHandler()
@@ -122,32 +155,26 @@ DrawMenuBar_(WindowID(#job)) ; Redraw the window's menu bar to reflect the chang
     
   EndProcedure
   
- ; Procedure WinProc(hWnd, Msg, wParam, lParam)
- ; result = #PB_ProcessPureBasicEvents
- ; Select Msg
-  ;  Case #WM_SYSCOMMAND 
-  ;    If wParam&$FFFD = #SC_MOVE
-   ;     ProcedureReturn 0
-   ;   EndIf
-  ;EndSelect
- ; ProcedureReturn result
-;EndProcedure
+
   
 
   
   Procedure aWOordertHandler()
     ;//////////////////////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     If OpenDatabase(0, "Mech-Logia.sqlite", "", "")
-    Debug "Connecté à Mech-Logia.sqlite"
+      Debug "Connecté à Mech-Logia.sqlite"
+      
    
+    
       DatabaseQuery (0, "SELECT * FROM Workorder")
    ; For i = 0 To 65000
       ;AddGadgetItem(#list, i, "Ancien élément "+Str(i))
      ; SetGadgetItemData(#list, i, i)
     ;Next i
       Debug ("Ouverture du work order " + GetGadgetText(#list))
-      
-     
+        
+      SetActiveWindow(1)
+  
            ButtonGadget(401, 0, 0, 215, 20,"Liste Historique WO par *VIN*")
            ListViewGadget(#listWOARCH, 0, 20, 215, 200)
            If DatabaseQuery (0, "SELECT * FROM Workorder")
@@ -248,9 +275,10 @@ DrawMenuBar_(WindowID(#job)) ; Redraw the window's menu bar to reflect the chang
       ButtonGadget(219, 225, 520, 800, 80,"JOB A ~ Z")
     
       
-
+ BindGadgetEvent(221, @savenotebuttonHandler())
  BindGadgetEvent(220, @newnotebuttonHandler())
  BindGadgetEvent(219, @openwindowjobHandler())
+ BindMenuEvent(1, 200, @closewindowHandler())
   ;EndIf
    ; ///////////////////////
   EndProcedure
@@ -285,7 +313,15 @@ DrawMenuBar_(WindowID(#job)) ; Redraw the window's menu bar to reflect the chang
        ;////////////////////////////////////////////////////////////////////////////////ùùùùù>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
        
          ;SetWindowCallback(@Winproc())
-         
+    OpenWindow(1, 0, 0, 1025, 620, "",#PB_Window_TitleBar |  #PB_Window_MinimizeGadget | #PB_Window_SystemMenu | #PB_Window_ScreenCentered, 0)
+       r=GetMenuItemCount_(GetSystemMenu_(WindowID(1),#False)) ; Get number of menu items.
+RemoveMenu_(GetSystemMenu_(WindowID(1),0),r-1,#MF_BYPOSITION) ; Disable "X" button.
+RemoveMenu_(GetSystemMenu_(WindowID(1),0),r-2,#MF_BYPOSITION) ; Remove separator.
+DrawMenuBar_(WindowID(1))                                     ; Redraw the window's menu bar to reflect the changes.
+CreateMenu(1, WindowID(1))  ; la création du menu commence ici....
+      MenuTitle("Menu")
+                       
+        MenuItem(200, "Fermer")
        ButtonGadget(402, 0, 220, 215, 20," Liste Bon de travail")
      ListViewGadget(#list, 0, 240, 215, 360) 
      
@@ -314,7 +350,7 @@ EndIf
 EndIf
 
 BindGadgetEvent(#list, @aWOordertHandler(), #PB_EventType_LeftClick)
-
+BindMenuEvent(1, 200, @closewindowHandler())
   
    
  ;BindMenuEvent(2, 4, @Quit2Handler())
@@ -324,17 +360,24 @@ BindGadgetEvent(#list, @aWOordertHandler(), #PB_EventType_LeftClick)
 
   
      Procedure CGWOHandler()
-    Debug "Evènement : Menu -Test-"
-   If OpenWindow(3, 225, 50, 800, 600, "Fenêtre Principale", 0)
-         WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
-       EndIf
+       Debug "Evènement : Menu -Test-"
+      OpenWindow(2, 0, 0, 800, 600, "Calendrier WO", #PB_Window_MinimizeGadget | #PB_Window_ScreenCentered | #PB_Window_BorderLess)
+   r=GetMenuItemCount_(GetSystemMenu_(WindowID(2),#False)) ; Get number of menu items.
+RemoveMenu_(GetSystemMenu_(WindowID(2),0),r-1,#MF_BYPOSITION) ; Disable "X" button.
+RemoveMenu_(GetSystemMenu_(WindowID(2),0),r-2,#MF_BYPOSITION) ; Remove separator.
+DrawMenuBar_(WindowID(2)) ; Redraw the window's menu bar to reflect the changes.
+CreateMenu(3, WindowID(2))  ; la création du menu commence ici....
+      MenuTitle("Menu")
+                       
+        MenuItem(200, "Fermer")
+   CalendarGadget(960, 0, 0, 600, 600)
+
+ BindMenuEvent(3, 200, @closewindow2Handler())
   EndProcedure
   
      Procedure CGMHandler()
     Debug "Evènement : Menu -Test-"
-   If OpenWindow(3, 225, 50, 800, 600, "Fenêtre Principale", 0)
-         WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
-       EndIf
+  CalendarGadget(860, 0, 0, 600, 600)
   EndProcedure
   
      Procedure HBTHandler()
@@ -397,10 +440,9 @@ BindGadgetEvent(#list, @aWOordertHandler(), #PB_EventType_LeftClick)
   EndProcedure
   
      Procedure EXFHandler()
-    Debug "Evènement : Menu -Test-"
-    If OpenWindow(3, 225, 50, 800, 600, "Fenêtre Principale", 0)
-         WebGadget (3, 0, 0, 800, 600, "https://www.google.ca")
-       EndIf
+    Debug "Explorateur de fichier ouvert!"
+     ExplorerListGadget(0, 0, 0, 1025, 600, GetHomeDirectory(), #PB_Explorer_Editable)
+   
   EndProcedure
   
      Procedure WOHandler()
@@ -528,6 +570,7 @@ EndProcedure
   If OpenWindow(#FenetrePrincipale, 0, 0, 1025, 620, "Mech-Logia", #PB_Window_TitleBar |  #PB_Window_MinimizeGadget | #PB_Window_SystemMenu | #PB_Window_ScreenCentered)
     ChangeIcon(Icone$)
     AddSysTrayIcon(0, WindowID(0), LoadImage(0, Icone$))
+    SmartWindowRefresh(0, #True)
    
     
     
@@ -560,7 +603,7 @@ EndProcedure
       MenuItem(12, "Information Flotte")
       MenuItem(13, "Dossier Facture")
       MenuItem(14, "Inventaire")
-      MenuItem(28, "Explorateur de Fichier")
+      MenuItem(16, "Explorateur de Fichier")
       MenuItem(23, "To Do List")
         
         
@@ -634,6 +677,7 @@ EndProcedure
         BindMenuEvent(0, 29, @CFHandler())
         BindMenuEvent(0, 30, @DLHandler())
         BindMenuEvent(0, 31, @freecadHandler())
+        
         
         ;/////////////////////////////////////////
         
@@ -714,7 +758,7 @@ EndProcedure
 ;EndIf
 ;
 ; IDE Options = PureBasic 6.02 LTS (Windows - x64)
-; CursorPosition = 154
-; FirstLine = 138
+; CursorPosition = 364
+; FirstLine = 361
 ; Folding = -------
 ; EnableXP
