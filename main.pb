@@ -13,28 +13,20 @@ Enumeration
       #mysql = 0
       #close
       #File
+
 EndEnumeration
 
   
    If OpenDatabase(0, "Mech-Logia.sqlite", "", "")
     Debug "Connecté à Mech-Logia.sqlite"
    EndIf
-   
-   
+ 
 Icone$ = "icon.ico"
 
-   
-  
- 
-  
-  
 
-
- 
-  
+Procedure GWOHandler()
+     Debug "Evènement : Menu -Test-"
    
-   Procedure GWOHandler()
-    Debug "Evènement : Menu -Test-"
     RunProgram("WO.exe")
   EndProcedure
   
@@ -459,7 +451,7 @@ EndProcedure
 ;EndIf
 ;
 ; IDE Options = PureBasic 6.02 LTS (Windows - x64)
-; CursorPosition = 273
-; FirstLine = 256
+; CursorPosition = 26
+; FirstLine = 246
 ; Folding = ------
 ; EnableXP

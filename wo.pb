@@ -3,6 +3,19 @@
 UseSQLiteDatabase()
 
 
+
+
+
+
+;///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+;///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+;///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+;///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+;///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 Enumeration
       #PageWO
       #listWOARCH
@@ -11,20 +24,23 @@ Enumeration
       #listNote4
       #job
       #listNote
+      #listjob
       #list
       #mysql = 0
       #close
       #File
 EndEnumeration
 
- Procedure closewindowHandler()
-    Debug "End program WO"
-    
-      End
-EndProcedure
+
+Procedure RELOADWOLIST()
+    Debug "editor window saved"
+   
+ RunProgram("WO.exe")
+  End
+  EndProcedure
 
 
-  Procedure savenotebuttonHandler()
+ Procedure savenotebuttonHandler()
     Debug "editor window saved"
      text1$ = GetGadgetText(#listNote3) + ".txt"
     OpenFile(0, text1$)    ; Ouvre un fichier existant ou en crée un nouveau s'il n'existait pas
@@ -34,83 +50,64 @@ EndProcedure
 
   
   EndProcedure
-
-  Procedure closewindowjobHandler()
-    Debug "job window closed"
-   CloseWindow(#job)
   
-  EndProcedure
-   
-    Procedure openwindowjobHandler()
-    Debug "editor gadget reload!"
-   OpenWindow(#job, 0, 0, 800, 600, "Job A ~ Z", #PB_Window_MinimizeGadget | #PB_Window_ScreenCentered | #PB_Window_BorderLess)
-   r=GetMenuItemCount_(GetSystemMenu_(WindowID(#job),#False)) ; Get number of menu items.
-RemoveMenu_(GetSystemMenu_(WindowID(#job),0),r-1,#MF_BYPOSITION) ; Disable "X" button.
-RemoveMenu_(GetSystemMenu_(WindowID(#job),0),r-2,#MF_BYPOSITION) ; Remove separator.
-DrawMenuBar_(WindowID(#job)) ; Redraw the window's menu bar to reflect the changes.
-CreateMenu(2, WindowID(#job))  ; la création du menu commence ici....
-      MenuTitle("Menu")
-                       
-        MenuItem(200, "Fermer")
 
-   ;///////////////////////////////////////////Wo job space///////////
-      TextGadget(216, 0, 280, 800, 20, "Liste des travaux", #PB_Text_Border | #PB_Text_Center)
-     
-      If ScrollAreaGadget(#PageWO, 0, 300, 800, 300, 800, 2600, 150) 
-        
-      StringGadget(124, 0 , 0, 800, 100, "Travaux A")
-      StringGadget(125, 0 , 100, 800, 100, "Travaux B")
-      StringGadget(126, 0 , 200, 800, 100, "Travaux C")
-      StringGadget(127, 0 , 300, 800, 100, "Travaux D")
-      StringGadget(128, 0 , 400, 800, 100, "Travaux E")
-      StringGadget(129, 0 , 500, 800, 100, "Travaux F")
-      StringGadget(130, 0 , 600, 800, 100, "Travaux G")
-      StringGadget(131, 0 , 700, 800, 100, "Travaux H")
-      StringGadget(132, 0 , 800, 800, 100, "Travaux I")
-      StringGadget(133, 0 , 900, 800, 100, "Travaux J")
-      StringGadget(134, 0 , 1000, 800, 100, "Travaux K")
-      StringGadget(135, 0 , 1100, 800, 100, "Travaux L")
-      StringGadget(136, 0 , 1200, 800, 100, "Travaux M")
-      StringGadget(137, 0 , 1300, 800, 100, "Travaux N")
-      StringGadget(138, 0 , 1400, 800, 100, "Travaux O")
-      StringGadget(139, 0 , 1500, 800, 100, "Travaux P")
-      StringGadget(140, 0 , 1600, 800, 100, "Travaux Q")
-      StringGadget(141, 0 , 1700, 800, 100, "Travaux R")
-      StringGadget(142, 0 , 1800, 800, 100, "Travaux S")
-      StringGadget(143, 0 , 1900, 800, 100, "Travaux T")
-      StringGadget(144, 0 , 2000, 800, 100, "Travaux U")
-      StringGadget(145, 0 , 2100, 800, 100, "Travaux V")
-      StringGadget(146, 0 , 2200, 800, 100, "Travaux W")
-      StringGadget(147, 0 , 2300, 800, 100, "Travaux X")
-      StringGadget(148, 0 , 2400, 800, 100, "Travaux Y")
-      StringGadget(149, 0 , 2500, 800, 100, "Travaux Z")
-      
-    
-     EndIf
-    
-    
- 
-    BindMenuEvent(2, 200, @closewindowjobHandler())
-  
-  EndProcedure
    
      Procedure newnotebuttonHandler()
     Debug "editor gadget reload!"
    EditorGadget(117, 425, 220, 600, 300)
   
+ EndProcedure
+ 
+ Procedure GETDESCA()
+    If OpenDatabase(0, "Mech-Logia.sqlite", "", "")
+      Debug "Connecté à Mech-Logia.sqlite"
+   DatabaseQuery (0, "SELECT * FROM Workorder WHERE ID=1")
+     
+               
+    Debug "editor gadget reload!"
+ 
+
+ 
+  
+
+    SetDatabaseString(0, 0, GetGadgetText(524))  
+  While NextDatabaseRow(0) ; Enumération des enregistrements
+    
+      ; Mise à jour du champ 'checked'  pour chaque enregistrement, en assumant  que le champ 'id'
+      ; est le premier de la table 'employee'
+      ;
+      DatabaseUpdate(0, "UPDATE Workorder SET JobAtext=? WHERE ID=1")
+    Wend
+
+
+  FinishDatabaseQuery(0)
+  
+ MessageRequester("Job # A Sauvegardée", "Les entrée 'Job # A' sont sauvegardée",  #PB_MessageRequester_Info)
+  
+  EndIf
   EndProcedure
 
-
-
-
-
-
+Procedure closewindowHandler()
+    Debug "End program WO"
+    
+      End
+    EndProcedure
+    
+    Procedure reloadwindowHandler()
+    Debug "reload WO"
+    
+    RunProgram("WO.exe")
+    End
+EndProcedure
+    
 Procedure aWOordertHandler()
     ;//////////////////////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     If OpenDatabase(0, "Mech-Logia.sqlite", "", "")
       Debug "Connecté à Mech-Logia.sqlite"
       
-   
+   SmartWindowRefresh(1, #True)
+
     
       DatabaseQuery (0, "SELECT * FROM Workorder")
    ; For i = 0 To 65000
@@ -118,10 +115,13 @@ Procedure aWOordertHandler()
      ; SetGadgetItemData(#list, i, i)
     ;Next i
       Debug ("Ouverture du work order " + GetGadgetText(#list))
-        
-      SetActiveWindow(1)
-      
-           ButtonGadget(401, 0, 0, 215, 20,"Liste Historique WO par *VIN*")
+       
+   HideGadget(#list, #True)
+           ButtonGadget(900, 0, 300, 215, 40, "Reload WO List")
+         
+        EndIf
+  
+         ButtonGadget(401, 0, 0, 215, 20,"Liste Historique WO par *VIN*")
            ListViewGadget(#listWOARCH, 0, 20, 215, 200)
            If DatabaseQuery (0, "SELECT * FROM Workorder")
               While NextDatabaseRow(#mySql)       
@@ -132,11 +132,6 @@ Procedure aWOordertHandler()
    
               success = #True
            EndIf
-           
-         
-        EndIf
-  
-         
     
          
       
@@ -218,16 +213,130 @@ Procedure aWOordertHandler()
       TextGadget(217, 425, 200, 600, 20, "Editeur de Note", #PB_Text_Border | #PB_Text_Center)
       EditorGadget(117, 425, 220, 600, 300)
       
-      ButtonGadget(219, 225, 520, 800, 80,"JOB A ~ Z")
-    
+      ;ButtonGadget(219, 225, 520, 800, 80,"JOB A ~ Z")
+      ButtonGadget(625, 550, 520, 230, 20, "Sauvegarder les JOB")
+      ;TextGadget(216, 1035, 0, 800, 20, "Liste des travaux", #PB_Text_Border | #PB_Text_Center)
+     
+     If ScrollAreaGadget(#PageWO, 225, 540, 800, 400, 800, 2600, 150) 
+        
+        
+               
+                DatabaseQuery (0, "SELECT * FROM Workorder WHERE ID=1")
+                NextDatabaseRow(0) 
+                EditorGadget(524, 0, 20, 780, 60)
+                AddGadgetItem(524, -1, GetDatabaseString(0, 1))
+                EditorGadget(525, 0, 80, 780, 100)
+                 AddGadgetItem(525, -1, GetDatabaseString(0, 2))
+                TextGadget(725, 0, 0, 550, 20, "Job #A ")
+                
+                
+                
+              ; EditorGadget(125, 0, 20, 800, 100)
+             ;  TextGadget(126, 1035 , 120, 800, 20, "Travaux B")
+              ; EditorGadget(127, 1035, 140, 800, 100)
+              ; TextGadget(128, 1035 , 240, 800, 20, "Travaux C")
+              ; EditorGadget(129, 1035, 260, 800, 100)
+              ; TextGadget(130, 1035 , 360, 800, 20, "Travaux D")
+              ; EditorGadget(131, 1035, 380, 800, 100)
+              ; TextGadget(132, 1035 , 480, 800, 20, "Travaux E")
+              ; EditorGadget(133, 1035, 500, 800, 100)
+              ; TextGadget(134, 1035 , 600, 800, 20, "Travaux F")
+              ; EditorGadget(135, 1035, 620, 800, 100)
+             ;  TextGadget(136, 1035 , 720, 800, 20, "Travaux G")
+              ; EditorGadget(137, 1035, 740, 800, 100)
+                  
+                   
+              
+        
+        
+        
+     ; StringGadget(124, 0 , 0, 800, 80, "Travaux A")
+      ;StringGadget(125, 0 , 100, 800, 100, "Travaux B")
+      ;StringGadget(126, 0 , 200, 800, 100, "Travaux C")
+     ; StringGadget(127, 0 , 300, 800, 100, "Travaux D")
+     ; StringGadget(128, 0 , 400, 800, 100, "Travaux E")
+     ; StringGadget(129, 0 , 500, 800, 100, "Travaux F")
+     ; StringGadget(130, 0 , 600, 800, 100, "Travaux G")
+     ; StringGadget(131, 0 , 700, 800, 100, "Travaux H")
+     ; StringGadget(132, 0 , 800, 800, 100, "Travaux I")
+     ;StringGadget(133, 0 , 900, 800, 100, "Travaux J")
+     ; StringGadget(134, 0 , 1000, 800, 100, "Travaux K")
+     ; StringGadget(135, 0 , 1100, 800, 100, "Travaux L")
+     ; StringGadget(136, 0 , 1200, 800, 100, "Travaux M")
+     ; StringGadget(137, 0 , 1300, 800, 100, "Travaux N")
+     ; StringGadget(138, 0 , 1400, 800, 100, "Travaux O")
+     ; StringGadget(139, 0 , 1500, 800, 100, "Travaux P")
+     ; StringGadget(140, 0 , 1600, 800, 100, "Travaux Q")
+     ; StringGadget(141, 0 , 1700, 800, 100, "Travaux R")
+     ; StringGadget(142, 0 , 1800, 800, 100, "Travaux S")
+     ; StringGadget(143, 0 , 1900, 800, 100, "Travaux T")
+     ; StringGadget(144, 0 , 2000, 800, 100, "Travaux U")
+     ; StringGadget(145, 0 , 2100, 800, 100, "Travaux V")
+     ; StringGadget(146, 0 , 2200, 800, 100, "Travaux W")
+      ;StringGadget(147, 0 , 2300, 800, 100, "Travaux X")
+     ; StringGadget(148, 0 , 2400, 800, 100, "Travaux Y")
+     ; StringGadget(149, 0 , 2500, 800, 100, "Travaux Z")
       
+   
+
+   EndIf
+    
+    
+ 
+    ;BindMenuEvent(2, 200, @closewindowjobHandler())
+ BindGadgetEvent(900, @RELOADWOLIST())
+ BindGadgetEvent(625, @GETDESCA())
  BindGadgetEvent(221, @savenotebuttonHandler())
  BindGadgetEvent(220, @newnotebuttonHandler())
- BindGadgetEvent(219, @openwindowjobHandler())
+ ;BindGadgetEvent(219, @openwindowjobHandler())
  BindMenuEvent(1, 200, @closewindowHandler())
-  ;EndIf
+ BindGadgetEvent(#list, @aWOordertHandler(), #PB_EventType_LeftClick)
+
+
    ; ///////////////////////
   EndProcedure
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+;///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+;///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+;///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+;///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+Icone$ = "icon.ico"
+ResultatA$ = "Job A"
+
+
+ 
+    
+
+
+
+
+
+
+
 
 
 
@@ -251,19 +360,21 @@ Procedure aWOordertHandler()
        
 
 
-   If OpenWindow(1, 0, 0, 1025, 620, "",#PB_Window_TitleBar |  #PB_Window_MinimizeGadget | #PB_Window_SystemMenu | #PB_Window_ScreenCentered, 0)
-      
+   If OpenWindow(1, 0, 0, 1035, 1080, "Workorder",#PB_Window_TitleBar |  #PB_Window_MinimizeGadget | #PB_Window_SystemMenu | #PB_Window_ScreenCentered)
+        
+    AddSysTrayIcon(1, WindowID(1), LoadImage(0, Icone$))
     
    
-       r=GetMenuItemCount_(GetSystemMenu_(WindowID(1),#False)) ; Get number of menu items.
-RemoveMenu_(GetSystemMenu_(WindowID(1),0),r-1,#MF_BYPOSITION) ; Disable "X" button.
-RemoveMenu_(GetSystemMenu_(WindowID(1),0),r-2,#MF_BYPOSITION) ; Remove separator.
-DrawMenuBar_(WindowID(1))                                     ; Redraw the window's menu bar to reflect the changes.
+     
 CreateMenu(1, WindowID(1))  ; la création du menu commence ici....
       MenuTitle("Menu")
-                       
+                   MenuItem(201, "Reload")      
         MenuItem(200, "Fermer")
-       ButtonGadget(402, 0, 220, 215, 20," Liste Bon de travail")
+      
+ 
+
+           
+            ButtonGadget(402, 0, 220, 215, 20," Liste Bon de travail")
      ListViewGadget(#list, 0, 240, 215, 360) 
      
   If DatabaseQuery (0, "SELECT * FROM Workorder")
@@ -278,29 +389,24 @@ CreateMenu(1, WindowID(1))  ; la création du menu commence ici....
     success = #True
 
   EndIf
- 
-  CloseDatabase(#mySql)
- 
 
 
-If Not success
- 
-  AddGadgetItem(#list, -1, "MySQL Error: " + DatabaseError())
- 
-EndIf
+
 EndIf
 EndIf
 BindGadgetEvent(#list, @aWOordertHandler(), #PB_EventType_LeftClick)
 BindMenuEvent(1, 200, @closewindowHandler())
+BindMenuEvent(1, 201, @reloadwindowHandler())
   
-   
+    CloseDatabase(#mySql)
  ;BindMenuEvent(2, 4, @Quit2Handler())
     Repeat : Until WaitWindowEvent()=#PB_Event_CloseWindow
   
       
 
 ; IDE Options = PureBasic 6.02 LTS (Windows - x64)
-; CursorPosition = 4
+; CursorPosition = 227
+; FirstLine = 198
 ; Folding = --
 ; EnableXP
 ; DPIAware
